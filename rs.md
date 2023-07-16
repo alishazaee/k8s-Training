@@ -42,9 +42,9 @@ minikube-m02   Ready    <none>          31m   v1.26.3   192.168.49.3   <none>   
 
 # ReplicaSet
 ReplicaSets have some benefits for us. In nutshell, these are the benefits that this resource can provide for us : 
-    - **Desired state** : The desired state is constantly compared with the current state, and if the two are different from each other, this resource takes action.
-    - **Scaling** : With this resource, you can increase or decrease the number of replicas and easily scale a service.
-    - **Self Healing** : This feature helps to automatically replace a pod if a problem occurs.
+- **Desired state** : The desired state is constantly compared with the current state, and if the two are different from each other, this resource takes action.
+- **Scaling** : With this resource, you can increase or decrease the number of replicas and easily scale a service.
+- **Self Healing** : This feature helps to automatically replace a pod if a problem occurs.
 
 ```
 apiVersion: apps/v1
