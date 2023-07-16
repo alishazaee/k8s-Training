@@ -1,4 +1,4 @@
-#Deployments
+# Deployments
 ### why to use deployments 
 Deployments are used in Kubernetes to upgrade or downgrade services. In fact, deployment sits on top of replicaset and uses it behind the scenes. Deployment gives us the ability to roll out and roll back, and this allows us to create different strategies for new releases of our application.
 
@@ -89,26 +89,26 @@ nginx version: nginx/1.17.10
 ## roll out to specific version
 With every change that the deployment makes in the program version, a revision is made, and these revisions show the different releases of a program.
 ```
-ali@ali-shazaei ~/k8s $ **kubectl rollout history deployment test**
+ali@ali-shazaei ~/k8s $ kubectl rollout history deployment test
 deployment.apps/test 
 REVISION  CHANGE-CAUSE
 2         <none>
 3         <none>
-ali@ali-shazaei ~/k8s $ **kubectl rollout history deployment test --revision 2**
+ali@ali-shazaei ~/k8s $ kubectl rollout history deployment test --revision 2
 deployment.apps/test with revision #2
 Pod Template:
   Labels:	app.kubernetes.io/project=sample_project
 	pod-template-hash=7d7b44bc55
   Containers:
    nginx:
-    Image:	**nginx:1.18**
+    Image:	nginx:1.18
     Port:	<none>
     Host Port:	<none>
     Environment:	<none>
     Mounts:	<none>
   Volumes:	<none>
 
-ali@ali-shazaei ~/k8s $ **kubectl rollout undo deployment test --to-revision 2**
+ali@ali-shazaei ~/k8s $ kubectl rollout undo deployment test --to-revision 2
 deployment.apps/test rolled back
 
 ```
