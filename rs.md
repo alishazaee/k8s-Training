@@ -12,7 +12,7 @@ for example you can get more help by using the following command :
 kubectl explain pods
 ```
 
-### Pods
+## Pods
 When working with Kubernetes, you don't have direct access to containers, and pods are an abstraction layer that manages containers.
 ```
 apiVersion: v1
@@ -40,7 +40,7 @@ minikube       Ready    control-plane   77d   v1.26.3   192.168.49.2   <none>   
 minikube-m02   Ready    <none>          31m   v1.26.3   192.168.49.3   <none>        Ubuntu 20.04.5 LTS   5.15.0-56-generic   docker://23.0.2
 ```
 
-# ReplicaSet
+## ReplicaSet
 ReplicaSets have some benefits for us. In nutshell, these are the benefits that this resource can provide for us : 
 - **Desired state** : The desired state is constantly compared with the current state, and if the two are different from each other, this resource takes action.
 - **Scaling** : With this resource, you can increase or decrease the number of replicas and easily scale a service.
@@ -71,7 +71,7 @@ spec:
 
 ```
 
-## Scaling Capability 
+### Scaling Capability 
 By using the following command, you tell replicaset to always make sure that the number of my pods is not less than 7 from the desired template.
 ```
 kubectl scale replicaset  test --replicas 7
