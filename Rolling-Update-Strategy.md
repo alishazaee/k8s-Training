@@ -2,6 +2,7 @@
 In a Rolling Update strategy in Kubernetes (k8s), old pods are gradually replaced with new and updated versions.
 
 When implementing a Rolling Update, Kubernetes creates new pods with the updated version and keeps the old pods running. Gradually, one of the old pods is terminated and replaced with a new pod. This process is repeated until all the old pods have been replaced by the new ones.
+![image](https://github.com/alishaza/k8s-Training/assets/53411387/4911c40c-2522-42af-9f64-50d0c92ccef8)
 
 The benefits of using a Rolling Update strategy are:
 
