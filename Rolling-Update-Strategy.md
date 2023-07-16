@@ -5,11 +5,14 @@ When implementing a Rolling Update, Kubernetes creates new pods with the updated
 
 The benefits of using a Rolling Update strategy are:
 
--  Continuous availability: The service remains available during the update process since the old pods continue to function until the update is complete.
+-  **Continuous availability**: The service remains available during the update process since the old pods continue to function until the update is complete.
 
--  Fault tolerance: If the update includes any errors or issues, Kubernetes can automatically roll back to the previous state upon detecting a failure in the new pods.
+-  **Fault tolerance**: If the update includes any errors or issues, Kubernetes can automatically roll back to the previous state upon detecting a failure in the new pods.
 
--  Speed control: You can control the speed of the update by adjusting the number of replicas that are updated at a time. This allows you to limit resource impact and fine-tune your cluster capacity according to your needs.
+-  **Speed control**: You can control the speed of the update by adjusting the number of replicas that are updated at a time. This allows you to limit resource impact and fine-tune your cluster capacity according to your needs.
+
+![image](https://github.com/alishaza/k8s-Training/assets/53411387/cff1c203-3512-47a9-aef4-ef05fe43f3e5)
+
 
 Rolling Update is a commonly used strategy in Kubernetes to minimize the impact of application updates, ensuring a seamless update process without downtime and maintaining high availability of the application.
 
