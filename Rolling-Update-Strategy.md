@@ -48,9 +48,9 @@ spec:
           image: nginx:1.17
 ```
 
--  maxSurge: This parameter specifies the maximum number (or percentage) of pods that can be created above the desired number of pods during the update. For example, if you have 10 replicas of a pod and set maxSurge to 2, Kubernetes can create up to 2 additional pods (above the desired 10) simultaneously. This helps to prevent any disruptions during the update by gradually introducing the new pods and ensuring sufficient capacity.
+-  **maxSurge**: This parameter specifies the maximum number (or percentage) of pods that can be created above the desired number of pods during the update. For example, if you have 10 replicas of a pod and set maxSurge to 2, Kubernetes can create up to 2 additional pods (above the desired 10) simultaneously. This helps to prevent any disruptions during the update by gradually introducing the new pods and ensuring sufficient capacity.
 
--  maxUnavailable: This parameter defines the maximum number (or percentage) of pods that can be unavailable during the update process. For instance, if you have 10 replicas of a pod and set maxUnavailable to 1, Kubernetes ensures that at least 9 out of the 10 pods remain available while replacing one pod at a time. This ensures the continuous availability of the application during the update.
+-  **maxUnavailable**: This parameter defines the maximum number (or percentage) of pods that can be unavailable during the update process. For instance, if you have 10 replicas of a pod and set maxUnavailable to 1, Kubernetes ensures that at least 9 out of the 10 pods remain available while replacing one pod at a time. This ensures the continuous availability of the application during the update.
 
 By configuring these parameters appropriately, you can control the pace of the update, the availability of the application, and the impact on resources. This helps to achieve a smooth and controlled Rolling Update process in Kubernetes.
 
