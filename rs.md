@@ -1,11 +1,13 @@
 # ReplicaSets and Pods
 ### APIs
 You can use the following command to find out which api should be used to work with any resource in Kubernetes.
-‍```
+
+``` 
 kubectl api-resources
 ```
 
 for example you can get more help by using the following command : 
+
 ```
 kubectl explain pods
 ```
@@ -29,9 +31,9 @@ spec:
 Using a pod means that if a problem occurs for that pod, it will not have HA capability
 
 
-# Container Runtime
+### Container Runtime
 You can see your container runtime through the following command. In minikube, the container runtime is Docker, while in new versions of Kubernetes, Docker is no longer used as a container runtime.
-‍‍‍```
+```
 ali@ali-shazaei ~/k8s $ kubectl get no -o wide
 NAME           STATUS   ROLES           AGE   VERSION   INTERNAL-IP    EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION      CONTAINER-RUNTIME
 minikube       Ready    control-plane   77d   v1.26.3   192.168.49.2   <none>        Ubuntu 20.04.5 LTS   5.15.0-56-generic   docker://23.0.2
