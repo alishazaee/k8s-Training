@@ -62,3 +62,71 @@ I will explain each field of toleration section in more detail:
    - PreferNoSchedule: Indicates a preference to avoid scheduling the pod on nodes with a matching taint, but it's not mandatory.
    - NoExecute: Evicts any existing pods that don't tolerate the taint from the node.
 
+
+
+let's consider a scenario which you have a node with special hardwares. You want to schedule pods that require the special hardware only on the high-performance node. one solution to this problem is using taints and tolerations.
+
+```
+ali@ali-shazaei ~/k8s/scheduling $ kubectl taint node kind-worker2 hw=special:NoSchedule
+node/kind-worker2 tainted
+```
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test
+  namespace: default
+  labels:
+    app.kubernetes.io/env: production
+    app.kubernetes.io/project: sample_project
+spec:
+  replicas: 6
+  selector:
+    matchLabels:
+      app.kubernetes.io/project: sample_project
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/project: sample_project
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:1.17
+      tolerations:
+      - key : hw
+        value: special
+        effect: NoSchedule
+        operator: Equal
+
+```
+
+if you want to force all the pods to be scheduled on the tainted node, you can use *nodename* attribute:
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test
+  namespace: default
+  labels:
+    app.kubernetes.io/env: production
+    app.kubernetes.io/project: sample_project
+spec:
+  replicas: 6
+  selector:
+    matchLabels:
+      app.kubernetes.io/project: sample_project
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/project: sample_project
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:1.17
+      tolerations:
+      - key : hw
+        value: special
+        effect: NoSchedule
+        operator: Equal
+      nodeName: kind-worker2
+```
