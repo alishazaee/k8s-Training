@@ -2,11 +2,12 @@
 
 A taint key is a unique identifier for a taint, and it can have an associated value. The taint key-value pair helps in adding more specificity to the taint and allows precise scheduling of pods.
 Taints have three main effects on scheduling:
-**1. NoSchedule**: This effect prevents the scheduler from placing pods on nodes with matching taints unless the pod has a toleration for that taint.
 
-**2. PreferNoSchedule**: This effect represents a preference for the scheduler to avoid placing non-tolerating pods on nodes with matching taints. However, scheduling is still possible if required.
+- **NoSchedule**: This effect prevents the scheduler from placing pods on nodes with matching taints unless the pod has a toleration for that taint.
 
-**3. NoExecute**: This effect not only prevents pod scheduling but also evicts any existing pods that do not tolerate the taint from the node.
+- **PreferNoSchedule**: This effect represents a preference for the scheduler to avoid placing non-tolerating pods on nodes with matching taints. However, scheduling is still possible if required.
+
+- **NoExecute**: This effect not only prevents pod scheduling but also evicts any existing pods that do not tolerate the taint from the node.
 
 
 All the master nodes have this taint. that is done by **kubeadm** when initiating the cluster.
