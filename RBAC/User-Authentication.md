@@ -169,3 +169,4 @@ ali@ali-shazaei ~/temp $ kubectl auth  can-i create pod --as alishazaee
 no
 ```
 There are several ways to access this user. If we want to give a developer access to the entire cluster, we must use the `clusterrole` resource inside Kubernetes, but if we want to create specific access to a namespace, we must use `Role` resource.
+![image](https://github.com/alishb80/k8s-Training/assets/53411387/6f6d7829-e435-415b-9be0-86f580fa96b7)
