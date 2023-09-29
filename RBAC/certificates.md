@@ -16,7 +16,7 @@ apiserver-kubelet-client.crt  ca.key		  front-proxy-client.key
 apiserver-kubelet-client.key  etcd		  sa.key
 apiserver.crt		      front-proxy-ca.crt  sa.pub
 ```
-we can see that CAs are defined in kubelet config file. In this case the clients can verify whether the server certificate was signed by it. in this way they can trust the communication. k8s CA's are trusted within k8s by all components, who have a copy of the CA.
+this is kubelet configuration file that contains necessary information for the kubelet to communicate securely with the Kubernetes API server and authenticate itself using client certificates and keys. we can see that CAs are defined in kubelet config file. In this case the clients can verify whether the server certificate was signed by it. in this way they can trust the communication. k8s CA's are trusted within k8s by all components, who have a copy of the CA. 
 ```
 ali@ali-shazaei ~ $ docker exec -it kind-control-plane cat /etc/kubernetes/kubelet.conf
 apiVersion: v1
