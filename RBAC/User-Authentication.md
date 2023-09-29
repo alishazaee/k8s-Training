@@ -134,3 +134,11 @@ ali@ali-shazaei ~/temp $ echo LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUM5akNDQW
 ali@ali-shazaei ~/temp $ ls 
 alishazaee.crt  alishazaee.csr  alishazaee.key  
 ```
+
+
+```
+ali@ali-shazaei ~/temp $ kubectl get pod
+Error from server (Forbidden): pods is forbidden: User "alishazaee" cannot list resource "pods" in API group "" in the namespace "default"
+```
+
+
