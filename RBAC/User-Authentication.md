@@ -163,7 +163,7 @@ Now Obviously, the alishazaee user has already been created, but because it has 
 ali@ali-shazaei ~/temp $ kubectl get pod
 Error from server (Forbidden): pods is forbidden: User "alishazaee" cannot list resource "pods" in API group "" in the namespace "default"
 ```
-one way to validate that the permissions are set correctly, is to use the following command. When you execute this command, it sends a request to the Kubernetes API server with the provided user identity and asks if the user has permission to perform the specified action. The API server then consults its configured RBAC (Role-Based Access Control) rules to determine if the user has the necessary permissions.
+one way to validate that the permissions are set correctly, is to use the following command as the admin user. When you execute this command, it sends a request to the Kubernetes API server with the provided user identity and asks if the user has permission to perform the specified action. The API server then consults its configured RBAC (Role-Based Access Control) rules to determine if the user has the necessary permissions.
 ```
 ali@ali-shazaei ~/temp $ kubectl auth  can-i create pod --as alishazaee
 no

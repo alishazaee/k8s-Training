@@ -29,3 +29,10 @@ subjects:
   name: alishazaee 
   apiGroup: rbac.authorization.k8s.io
 ```
+after applying the new configuration, we are not able to get the services but we have access to pod information on all namespaces.
+```
+ali@ali-shazaei ~/temp $ kubectl get pod
+No resources found in default namespace.
+ali@ali-shazaei ~/temp $ kubectl get svc
+Error from server (Forbidden): services is forbidden: User "alishazaee" cannot list resource "services" in API group "" in the namespace "default"
+```
