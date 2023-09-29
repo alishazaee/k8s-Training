@@ -168,4 +168,4 @@ one way to validate that the permissions are set correctly, is to use the follow
 ali@ali-shazaei ~/temp $ kubectl auth  can-i create pod --as alishazaee
 no
 ```
-
+There are several ways to access this user. If we want to give a developer access to the entire cluster, we must use the `clusterrole` resource inside Kubernetes, but if we want to create specific access to a namespace, we must use `Role` resource.
