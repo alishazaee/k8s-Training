@@ -1,5 +1,8 @@
 # User Authentication
 each developer team works in a different namespace. we want to restrict access to only their namespaces so they don't accidentally break something in the namespace of the other team. we use RBAC or role based access control to do this.
+## a scenario where user authentication is crucial in Kubernetes
+In a multi-tenant Kubernetes cluster, there are multiple teams or organizations, each responsible for deploying and managing their own applications. User authentication becomes essential to ensure secure access control and proper separation of privileges.
+
 
 In Kubernetes, the concepts of roles, role bindings, and users are interconnected to define access and permissions within the cluster. Here's an explanation of these concepts and their relationship:
 
@@ -13,7 +16,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   namespace: microservice
-  name: cicd-role
+  name: user-role
 rules:
 - apiGroups: [""]
   resources: ["pods" , "services" , "secrets"]
@@ -26,7 +29,7 @@ rules:
 
 2. User or group:
    - In Kubernetes, users represent individuals or entities accessing the cluster.
-   - groups are associated with teams. a group of users represents the `group` in k8s cluster.
+   - Users are not built in components in k8s. this means that k8s does not manage Users natively and no k8s objects are exist for representing normal user accounts. Users can be defined with static token file or certificates or even 3rd party identity service like LDAP.
 
 
 3. Role Binding:
@@ -35,6 +38,3 @@ rules:
    - Role bindings establish the connection between roles and subjects, enabling the assignment of permissions.
    - Multiple role bindings can be created to associate multiple users, groups, or service accounts with a specific role.
    
-## a scenario where user authentication is crucial in Kubernetes
-
-In a multi-tenant Kubernetes cluster, there are multiple teams or organizations, each responsible for deploying and managing their own applications. User authentication becomes essential to ensure secure access control and proper separation of privileges.
