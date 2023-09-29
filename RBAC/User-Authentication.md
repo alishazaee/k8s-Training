@@ -1,6 +1,6 @@
 # User Authentication
 each developer team works in a different namespace. we want to restrict access to only their namespaces so they don't accidentally break something in the namespace of the other team. we use RBAC or role based access control to do this.
-## a scenario where user authentication is crucial in Kubernetes
+## A scenario where user authentication is crucial in Kubernetes
 In a multi-tenant Kubernetes cluster, there are multiple teams or organizations, each responsible for deploying and managing their own applications. User authentication becomes essential to ensure secure access control and proper separation of privileges.
 
 
@@ -11,6 +11,7 @@ In Kubernetes, the concepts of roles, role bindings, and users are interconnecte
    - Roles are created using the `Role` API object and defined in YAML manifests.
    - Roles can specify permissions for various resources, such as pods, services, secrets, config maps, etc.
    - Roles define what actions a user or service account can perform on the specified resources, like create, read, update, or delete.
+this is a sample role configuration.
 ```
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
@@ -73,6 +74,7 @@ wozTs28UyKgMI1GNwJCUaKUBXACsN7vd0/fgS8lkF/dDi3CdJ/Lot8nXSJaKOdtD
 JRBgGtbiL33rRBNsdUhM9u7H
 -----END PRIVATE KEY-----
 ```
+
 kubernetes has certificate API which allows you to send it the CSR and k8s will sign it for us. It provides flexibility for generating and distributing certificates based on custom requirements specific to the applications running in the cluster.
 the next step is to create CSR for this private key. we set certificate name to alishazaee which indicates that the certificate is for alishazaee user.
 ```
@@ -119,8 +121,7 @@ ali@ali-shazaei ~/temp $ kubectl get csr
 NAME         AGE   SIGNERNAME                            REQUESTOR          REQUESTEDDURATION   CONDITION
 alishazaee   10m   kubernetes.io/kube-apiserver-client   kubernetes-admin   100d                Pending
 ```
-
-
+next step is to approve the user CA.
 ```
 ali@ali-shazaei ~/temp $ kubectl certificate approve alishazaee
 certificatesigningrequest.certificates.k8s.io/alishazaee approved
@@ -128,17 +129,43 @@ ali@ali-shazaei ~/temp $ kubectl get csr
 NAME         AGE   SIGNERNAME                            REQUESTOR          REQUESTEDDURATION   CONDITION
 alishazaee   12m   kubernetes.io/kube-apiserver-client   kubernetes-admin   100d                Approved,Issued
 ```
-
+then we should extract our crt file from `kubectl get csr -o yaml | grep certificate:`
 ```
 ali@ali-shazaei ~/temp $ echo LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUM5akNDQWQ2Z0F3SUJBZ0lRZTlIaEMzWmlvb2Q3aGpZcytWVGd6VEFOQmdrcWhraUc5dzBCQVFzRkFEQVYKTVJNd0VRWURWUVFERXdwcmRXSmxjbTVsZEdWek1CNFhEVEl6TURreU9URXdNVFV5T1ZvWERUSTBNREV3TnpFdwpNVFV5T1Zvd0VURVBNQTBHQTFVRUF4TUdZVzVuWld4aE1JSUJJakFOQmdrcWhraUc5dzBCQVFFRkFBT0NBUThBCk1JSUJDZ0tDQVFFQTByczhJTHRHdTYxakx2dHhWTTJSVlRWMDNHWlJTWWw0dWluVWo4RElaWjBOdHYxRm1FUVIKd3VoaUZsOFEzcWl0Qm0wMUFSMkNJVXBGd2ZzSjZ4MXF3ckJzVkhZbGlBNVhwRVpZM3ExcGswSDQzdndoYmUrWgo2MVNrVHF5SVBYUUwrTWM5T1Nsbm0xb0R2N0NtSkZNMUlMRVI3QTVGZnZKOEdFRjJ6dHBoaUlFM25vV210c1lvCnJuT2wzc2lHQ2ZGZzR4Zmd4eW8ybmlneFNVekl1bXNnVm9PM2ttT0x1RVF6cXpkakJ3TFJXbWlESWYxcExaejIKalVnald4UkhCM1gyWnVVV1d1T09PZnpXM01LaE8ybHEvZi9DdS8wYk83c0x0MCt3U2ZMSU91TFdxb3RuVm1GbApMMytqTy82WDNDKzBERHk5aUtwbXJjVDBnWGZLemE1dHJRSURBUUFCbzBZd1JEQVRCZ05WSFNVRUREQUtCZ2dyCkJnRUZCUWNEQWpBTUJnTlZIUk1CQWY4RUFqQUFNQjhHQTFVZEl3UVlNQmFBRkhHTVF4RU5pT1A1bUJDYXVhUjYKcVlUanJaYXVNQTBHQ1NxR1NJYjNEUUVCQ3dVQUE0SUJBUUJMMFI5VHVodGlVYXE4QndPMnBseEMwVEhzZmhUNApHdFltNk5SNy8xWUlyMHEybFBpTzFhYTlMdWl0cmdnZkR2bUxHbW9yRlNETEg0ZEhDRE11aithSnJwNlNDSXR6CnFzL1d3OUo1TTBQL1RoS3A2UzNGK3BQQjZ0T2Z6aUJGaFFQOEh6N2JwalV2RGpyWkhnUWEzNVNDQUxoaC9tbTYKandBcUxqdWFiU1NuR2ZJRmdYNkE0RGxDaHZxZmhxemozckxPY3N0OTMyT0toZTNUVmltbGo1dmRKN0E2VklQdApFQXRUWlJESks1ZXEydkFvVEo5VmFzbVkrQ3o2L25rQ3Z1V2Zqb2tydWNvS2RPU3BvUEJrVWVNbFM0VkhFb3JWCmo3V2prc3dSUjI1dWJmdlVaaFZpcXRKVTZRYktuUnJjS2VYN0pBUVp5b3RTYWdWRG9yb0RGKzhmCi0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0K | base64 --decode  > alishazaee.crt
 ali@ali-shazaei ~/temp $ ls 
 alishazaee.crt  alishazaee.csr  alishazaee.key  
 ```
 
-
+We use these certificates to create the kubeconfig file. We can directly put the base64 format of those certificates in the kubeconfig file and give it to the developers to use it to access the cluster, or we can use the reference of the private key and the crt file in the kubeconfig.
+```
+apiVersion: v1
+clusters:
+- cluster:
+    certificate-authority-data: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUMvakNDQWVhZ0F3SUJBZ0lCQURBTkJna3Foa2lHOXcwQkFRc0ZBREFWTVJNd0VRWURWUVFERXdwcmRXSmwKY201bGRHVnpNQjRYRFRJek1Ea3lOVEUzTURjek5Wb1hEVE16TURreU1qRTNNRGN6TlZvd0ZURVRNQkVHQTFVRQpBeE1LYTNWaVpYSnVaWFJsY3pDQ0FTSXdEUVlKS29aSWh2Y05BUUVCQlFBRGdnRVBBRENDQVFvQ2dnRUJBT0tECjdSS1RBVzFtVXdGSDdXRDFxR3hsYzhFaEJLOWNVdHJjUnVxcWlQNzhsWnRxOG0xNDVaelByM0ZaQy95RG03N1oKVGNYOVVKcE1OUWRYQ0dzUXNBTjh3QVNDeUUyZC84NGM2bTZocHpQV0JEZW9zeUVRTDV2VlQ3S2ZxcFVqZDFMbgpHdWVzcnlTOHdmQm1pK0RzTmo1dTJWSk5PV3U0VzF6TWppYnBOcEp5UCs1WkprYk1oeDFkMnI5UkI4cmlWRzNKCng1Vld3d0NhVUt6eXVDQW1maEJkWVpsRTNPaGszUjNBMitORU40OWdPSGNoaGx4RlZFRkNKSVgzbkRxTURIYlQKMFdFN0RkeHVUVk5OMlUyYzVtYnRwbE1xSkUyQmdmaytYVXFabTNSZEtFQlg0QkVzNTgxNGJLVDlFVUtzaDlCdQpGMWViQTZJcnlubER1dFppdUJzQ0F3RUFBYU5aTUZjd0RnWURWUjBQQVFIL0JBUURBZ0trTUE4R0ExVWRFd0VCCi93UUZNQU1CQWY4d0hRWURWUjBPQkJZRUZIR01ReEVOaU9QNW1CQ2F1YVI2cVlUanJaYXVNQlVHQTFVZEVRUU8KTUF5Q0NtdDFZbVZ5Ym1WMFpYTXdEUVlKS29aSWh2Y05BUUVMQlFBRGdnRUJBS0dTSkdWdlN6NEp5MHhLaUhZNwp3UWlrWjQvOEZJRGd1dlBFNTJVTGJDQ0ZCb2Y3RGsvWkJ6NlZlYlBQUGF1SFpCMDBWa1dVNXVIYzdnamlCQStWCmNDbzFMZGRva3pFYXpOeE9iV3N6MW9DaVZRYUlsZW10cmhwZEZ4b3J3RndGRy82TDhXdHc3My9HZ1BvekpiTFYKcGI3ejJtNGIyVjhha28xWkZmUmFOR0NJeWFwU2xtZzd4Um9kcHkxU3hadW9MVjhpQ3hOSlBKczBRL0pyTjgvWAo4NkYrNnZ4QThjTENReGM5SE9HMHRjNDFHSzhiR2tqL0V2NVQ1WkJpUWdDN0hSZ2MwWW02c0tXZXNpa3JkSDFNCnFTYUYzQVJwY2VHQmdBVEtEM0FiaFdLbkVTaEMxWDFTS1ZFMEU3UWlBTk9BVDVkbkxBYjhHazBoc1hnd1pqWU4KUFhRPQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg==
+    server: https://127.0.0.1:46459
+  name: kind
+contexts:
+- context:
+    cluster: kind
+    user: alishazaee
+  name: alishazaee@kind
+current-context: alishazaee@kind
+kind: Config
+preferences: {}
+users:
+- name: alishazaee
+  user:
+    client-certificate: alishazaee.crt 
+    client-key: alishazaee.key
+```
+Now Obviously, the alishazaee user has already been created, but because it has not been bound to any ClusterRole or Role, we do not have access to any resources.
 ```
 ali@ali-shazaei ~/temp $ kubectl get pod
 Error from server (Forbidden): pods is forbidden: User "alishazaee" cannot list resource "pods" in API group "" in the namespace "default"
 ```
-
+one way to validate that the permissions are set correctly, is to use the following command. When you execute this command, it sends a request to the Kubernetes API server with the provided user identity and asks if the user has permission to perform the specified action. The API server then consults its configured RBAC (Role-Based Access Control) rules to determine if the user has the necessary permissions.
+```
+ali@ali-shazaei ~/temp $ kubectl auth  can-i create pod --as alishazaee
+no
+```
 
