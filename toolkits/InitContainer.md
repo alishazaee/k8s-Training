@@ -67,9 +67,9 @@ spec:
   type: LoadBalancer
   selector:
     app.kubernetes.io/project: sample_project
+```
 
-
-
+```
 ali@ali-shazaei ~/k8s/toolkits/sidecar $ kubectl get pod
 NAME                  READY   STATUS     RESTARTS   AGE
 test-bf64d588-t46zv   0/2     Init:0/1   0          3s
