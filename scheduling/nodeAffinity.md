@@ -73,3 +73,12 @@ spec:
                 - ssd
 
 ```
+The **weight** field is an integer value that indicates how strongly the scheduler should prefer the nodes that match the given expressions. Higher values mean higher preference
+
+In Kubernetes, node affinity uses operators to define rules for node selection. The main operators used in node affinity are:
+- **In:** Matches nodes where the label value is within a specified list.
+- **NotIn:** Matches nodes where the label value is not within a specified list.
+- **Exists:** Matches nodes that have a specified label, regardless of value.
+- **DoesNotExist:** Matches nodes that do not have the specified label.
+- **Gt:** Matches nodes where the label value is greater than a specified value (for numeric values).
+- **Lt:** Matches nodes where the label value is less than a specified value (for numeric values).
